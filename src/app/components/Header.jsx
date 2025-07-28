@@ -1,27 +1,42 @@
+'use client';
+
 import { IoStatsChartSharp } from "react-icons/io5";
 import { FaBox } from "react-icons/fa";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+    const pathname = usePathname();
+
     return (
         <div>
-            <header className="flex  justify-between p-2 items-center   shadow-xl">
+            <header className="flex  justify-between p-2 items-center   shadow-xl ">
                 <div className=" flex flex-row items-center gap-2 ">
-                    <FaBox className=" text-blue-500" />
-                    <h1>  StockManager</h1>
+                    <h1 className=" flex items-center gap-2 font-semibold text-xl">
+                        <FaBox className="text-base text-blue-500" />
+                        StockManager</h1>
                 </div>
 
                 <nav className="">
-                    <div className="flex flex-row gap-2 text-center items-center  mx-auto ">
+                    <div className="flex flex-row  text-center items-center   ">
                         <Link href="/Dashboard">
-                            <h2 className="hover:bg-gray-500/50 rounded p-2"> <IoStatsChartSharp className="inline-flex text-xs" /> DashBoard</h2>
+                            <h2
+                                className={`hover:bg-gray-500/50 rounded p-2 flex items-center gap-2 ${pathname === "/Dashboard" ? "bg-blue-500/80 text-white" : ""}`}>
+                                <IoStatsChartSharp />
+                                Dashboard
+                            </h2>
                         </Link>
-                        <h2 className="hover:bg-gray-500/50 rounded p-2"> <FaBox className="inline-flex text-xs " /> Products</h2>
-                        <h2 className="hover:bg-gray-500/50 rounded p-2"> + Add Product</h2>
+                        <Link href="/Products">
+                            <h2
+                                className={`hover:bg-gray-500/50 rounded p-2 flex items-center gap-2 ${pathname === "/Products" ? "bg-blue-400/30 text-blue-800 " : ""}`}>
+                                <FaBox className="" />
+                                Products
+                            </h2>
+                        </Link>
                     </div>
                 </nav>
             </header>
-        </div>
+        </div >
     )
 
 }
