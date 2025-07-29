@@ -17,7 +17,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function ChartContent() {
     const [products, setProducts] = useState([]);
-    const [SelectCategory, setSelectedCategory] = useState('Todas');
     const [chartData, SetChartData] = useState({
         labels: [],
         datasets: [],
@@ -37,6 +36,7 @@ export default function ChartContent() {
                 //mostrando a quantidade dos produtos
                 const quantity = products.map((prod) => prod.quantity)
 
+
                 SetChartData({
                     labels,
                     datasets: [
@@ -46,7 +46,9 @@ export default function ChartContent() {
                             backgroundColor: 'rgba(59, 130, 246, 0.6)',
                             borderRadius: 5,
                         },
+
                     ],
+
                 });
             } catch (error) {
                 console.error('Erro ao carregar os dados', error)
