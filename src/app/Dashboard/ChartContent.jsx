@@ -12,7 +12,7 @@ import {
 import api from '../../lib/api';
 import { useEffect, useState } from "react";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip,);
 
 export default function ChartContent() {
     const [products, setProducts] = useState([]);
@@ -58,30 +58,30 @@ export default function ChartContent() {
         });
     }, [products, selectedCategory]);
 
+    //mostrando os dados pela categoria
     const categories = ['Todas', ...new Set(products.map(prod => prod.category))];
 
     return (
-        <div>
-            <div className="w-full max-w-3xl mx-auto bg-white p-4 rounded-xl shadow">
-                <h2 className="text-lg font-semibold mb-4">Estoque por Produto</h2>
+        <div className="w-full max-w-3xl mx-auto bg-white p-4 rounded-xl shadow mt-10">
+            <h2 className="text-lg font-semibold mb-4 ">Estoque por Produto</h2>
 
-                <div className="mb-4">
-                    <label className="mr-2 font-medium">Filtrar por categoria:</label>
-                    <select
-                        className="border border-gray-300 rounded p-1"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                        {categories.map((cat, index) => (
-                            <option key={index} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <Bar data={chartData} />
+            <div className="mb-4">
+                <label className="mr-2 text-md font-medium">Filtrar por categoria:</label>
+                <select
+                    className="border border-gray-300 rounded p-1"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                    {/* percore todas as categorias e mostra no front */}
+                    {categories.map((cat, index) => (
+                        <option key={index} value={cat}>
+                            {cat}
+                        </option>
+                    ))}
+                </select>
             </div>
+
+            <Bar data={chartData} />
         </div>
     );
 }
