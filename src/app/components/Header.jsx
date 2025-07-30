@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
         <div>
-            <header className="flex  justify-between p-2 items-center   shadow-xl ">
+            <header className="flex  justify-between p-2 items-center   shadow-xl  ">
                 <div className=" flex flex-row items-center gap-2 ">
                     <h1 className=" flex items-center gap-2 font-semibold text-xl">
                         <FaBox className="text-base text-blue-500" />
@@ -18,10 +18,10 @@ export default function Header() {
                 </div>
 
                 <nav className="">
-                    <div className="flex flex-row  text-center items-center   ">
+                    <div className="flex flex-row  text-center items-center  gap-5  ">
                         <Link href="/Dashboard">
                             <h2
-                                className={`hover:bg-gray-500/50 rounded p-2 flex items-center gap-2 ${pathname === "/Dashboard" ? "bg-blue-500/80 text-white" : ""}`}>
+                                className={`hover:bg-gray-500/50 rounded p-2 flex items-center gap-2 ${pathname === "/Dashboard" ? "bg-blue-400/30 text-blue-800" : ""}`}>
                                 <IoStatsChartSharp />
                                 Dashboard
                             </h2>
@@ -33,6 +33,15 @@ export default function Header() {
                                 Products
                             </h2>
                         </Link>
+
+                        <Link href="/Form">
+                            <h2
+                                className={`hover:bg-gray-500/50 rounded p-2 flex items-center gap-2 ${pathname === "/Form" ? "bg-blue-400/30 text-blue-800 " : ""}`}>
+                                <FaBox className="" />
+                                Add Produto
+                            </h2>
+                        </Link>
+
                     </div>
                 </nav>
             </header>

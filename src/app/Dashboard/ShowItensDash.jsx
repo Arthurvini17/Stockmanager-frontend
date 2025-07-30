@@ -28,14 +28,10 @@ export default function () {
     return (
         <div className="flex items-center justify-center gap-2 py-10  bg-gray-100">
             <div className="bg-white p-4 rounded shadow">
-
                 <h1 className={`flex items-center gap-2 ${totalQuantity > 2 ? '' : 'text-red-500'}`}>
                     <FaBox /> Total de produtos: {totalQuantity}
                 </h1>
-
-
             </div>
-
             <div className="bg-white p-4 rounded shadow">
                 <h1 className='flex items-center gap-2'> <MdAttachMoney className='text-green-500' /> Preço total: {totalPrice}</h1>
             </div>
