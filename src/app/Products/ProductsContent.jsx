@@ -2,11 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
-
+import { CiEdit } from "react-icons/ci";
+import { IoRemoveCircle } from "react-icons/io5";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 export default function ProductsContent() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     //buscando produtos
     useEffect(() => {
@@ -47,6 +51,8 @@ export default function ProductsContent() {
             </div>
         );
     }
+
+
     return (
         <div className='w-full mx-auto p-20'>
             <div className=''>
@@ -89,8 +95,14 @@ export default function ProductsContent() {
                             <td className='p-2  text-blue-500'>{prod.category}</td>
                             <td className='p-2 '>{prod.price}</td>
                             <td className='p-2'>{prod.quantity}</td>
-                            <td className='mx-auto  '><button>Editar</button>
-                                <button>Excluir</button>
+                            <td>
+                                <button
+                                    onClick={() => router.push(`/Products/editar/${prod.id}`)}
+                                    aria-label="Editar produto"
+                                    className="text-blue-500 hover:text-blue-700"
+                                >
+                                    <CiEdit />
+                                </button>
                             </td>
                         </tr>
                     )}
