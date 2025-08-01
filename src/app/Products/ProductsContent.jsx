@@ -6,6 +6,7 @@ import api from '../../lib/api';
 export default function ProductsContent() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     //buscando produtos
     useEffect(() => {
@@ -32,6 +33,20 @@ export default function ProductsContent() {
         fetchProducts();
     }, [search]);
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000);
+
+    })
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen bg-white">
+                <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
     return (
         <div className='w-full mx-auto p-20'>
             <div className=''>
