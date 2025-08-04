@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import { CiEdit } from "react-icons/ci";
 import { IoRemoveCircle } from "react-icons/io5";
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 export default function ProductsContent() {
     const [products, setProducts] = useState([]);
@@ -38,6 +37,11 @@ export default function ProductsContent() {
     }, [search]);
 
 
+    const handleDelete = async (deletingProduct) => {
+        const newProduct = products.filter((products) => products !== deletingProduct);
+        setProducts(newProduct);
+
+    }
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false)
@@ -91,8 +95,8 @@ export default function ProductsContent() {
                     {products.map((prod) =>
                         //busca pelo id
                         <tr key={prod.id} className=' text-center  border-[0.5px] border-gray-300'>
-                            <td className='p-2  text-start '>{prod.Product_name}</td>
-                            <td className='p-2  text-blue-500'>{prod.category}</td>
+                            <td className='p-2 text-start '>{prod.Product_name}</td>
+                            <td className='p-2 text-blue-500'>{prod.category}</td>
                             <td className='p-2 '>{prod.price}</td>
                             <td className='p-2'>{prod.quantity}</td>
                             <td>
@@ -102,6 +106,10 @@ export default function ProductsContent() {
                                     className="text-blue-500 hover:text-blue-700"
                                 >
                                     <CiEdit />
+                                </button>
+
+                                <button onClick={() => handleDelete(products)} className='text-red-500 hover:text-red-700'>
+                                    <IoRemoveCircle />
                                 </button>
                             </td>
                         </tr>
