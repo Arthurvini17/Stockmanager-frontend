@@ -28,7 +28,7 @@ export default function ChartContent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await api.get('/https://stockmanager-backend-p2ko.onrender.com');
+                const res = await api.get('/https://stockmanager-backend-p2ko.onrender.com/products');
                 setProducts(res.data);
             } catch (error) {
                 console.error('Erro ao carregar os dados', error);
