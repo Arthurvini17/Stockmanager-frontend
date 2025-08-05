@@ -1,7 +1,10 @@
 'use client';
-
 import axios from 'axios';
 import { useState } from 'react';
+import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 export default function FormContent() {
     const [formData, setFormData] = useState({
@@ -23,6 +26,7 @@ export default function FormContent() {
 
     //enviando os dados que foram capturados
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const payload = {
             ...formData,
             price: Number(formData.price),
@@ -31,17 +35,22 @@ export default function FormContent() {
 
         try {
             const res = await axios.post('https://stockmanager-backend-p2ko.onrender.com/products', payload);
-            console.log('Produto adicionado!', res.data);
+            toast.success(res.data.message);
         } catch (error) {
-            console.error('Erro no envio', error);
+            toast.error('Erro ao enviar');
         }
     };
 
     return (
         <div className="mt-10 w-full flex justify-center">
+
             <div className="w-full max-w-xl bg-gray-100/70 p-6 rounded-xl">
                 <div className="mb-6">
-                    <p className="text-sm text-gray-700">Back to Products</p>
+                    <ToastContainer position='top-right' autoClose={3000} />
+                    <Link href={"/Products"}>
+                        <p className="text-sm text-gray-700">Back to Products</p>
+                    </Link>
+
                     <h1 className="text-2xl font-semibold">Add Novo produto</h1>
                     <p className="text-base text-gray-600">Preencha em detalhes para adicionar um novo produto ao seu dashboard</p>
                 </div>
@@ -108,7 +117,7 @@ export default function FormContent() {
                     </div>
 
                     <div className="col-span-2 flex justify-center">
-                        <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
                             Adicionar Produto
                         </button>
                     </div>
