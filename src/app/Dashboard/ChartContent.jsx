@@ -16,6 +16,8 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip,);
 
 export default function ChartContent() {
     const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     const [selectedCategory, setSelectedCategory] = useState("Todas");
     const [chartData, setChartData] = useState({
         labels: [],
@@ -58,6 +60,26 @@ export default function ChartContent() {
         });
     }, [products, selectedCategory]);
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen bg-white">
+                <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
+
+
+
     //mostrando os dados pela categoria
     const categories = ['Todas', ...new Set(products.map(prod => prod.category))];
 
@@ -70,8 +92,7 @@ export default function ChartContent() {
                 <select
                     className="border border-gray-300 rounded p-1"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                >
+                    onChange={(e) => setSelectedCategory(e.target.value)}>
                     {/* percore todas as categorias e mostra no front */}
                     {categories.map((cat, index) => (
                         <option key={index} value={cat}>

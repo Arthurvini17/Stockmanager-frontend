@@ -1,14 +1,12 @@
-import Header from "../components/Header";
-import ChartContent from "./ChartContent";
-import ShowItensDash from "./ShowItensDash";
+import ShowItensDash from '../Dashboard/ShowItensDash';
+import ChartContent from '../Dashboard/ChartContent';
 
 export default function Dashboard() {
-    return (
 
+    return (
         <div>
             <ShowItensDash />
             <ChartContent />
         </div>
-
-    )
+    );
 }

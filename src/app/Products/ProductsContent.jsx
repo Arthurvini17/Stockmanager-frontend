@@ -2,10 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
+import { CiEdit } from "react-icons/ci";
+import { IoRemoveCircle } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
 export default function ProductsContent() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     //buscando produtos
     useEffect(() => {
@@ -32,10 +39,51 @@ export default function ProductsContent() {
         fetchProducts();
     }, [search]);
 
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await api.delete('/products/' + id);
+            const newArray = products.filter((product) => product.id !== id);
+            setProducts(newArray);
+
+            toast.success(response.data.message);
+        } catch (error) {
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else if (typeof error.response?.data === 'string') {
+                toast.error(error.response.data);
+            } else {
+                toast.error("Erro ao deletar produto.");
+            }
+        }
+    };
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000);
+
+    })
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen bg-white">
+                <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
+
+    const filteredProducts = products.filter(prod => prod === 0);
+
+
+
     return (
         <div className='w-full mx-auto p-20'>
+
             <div className=''>
                 <div>
+                    <ToastContainer position='top-right' autoClose={3000} />
+
                     <h1 className="text-2xl font-bold ">Produtos</h1>
                     <p className='text-md font-light '>Gerencie seu inventario de produtos</p>
                 </div>
@@ -57,7 +105,9 @@ export default function ProductsContent() {
             </div>
             <table className=" min-w-full table-auto  border-[0.5px] border-gray-300">
                 <thead className=''>
+
                     <tr className='text-center bg-gray-200/50 font-extralight  '>
+
                         <th className='p-2 py-2 text-start font-light'>PRODUTO</th>
                         <th className='p-2 font-light '>CATEGORIA</th>
                         <th className='p-2 font-light'>PREÇO</th>
@@ -70,12 +120,22 @@ export default function ProductsContent() {
                     {products.map((prod) =>
                         //busca pelo id
                         <tr key={prod.id} className=' text-center  border-[0.5px] border-gray-300'>
-                            <td className='p-2  text-start '>{prod.Product_name}</td>
-                            <td className='p-2  text-blue-500'>{prod.category}</td>
+                            <td className='p-2 text-start '>{prod.Product_name}</td>
+                            <td className='p-2 text-blue-500'>{prod.category}</td>
                             <td className='p-2 '>{prod.price}</td>
                             <td className='p-2'>{prod.quantity}</td>
-                            <td className='mx-auto  '><button>Editar</button>
-                                <button>Excluir</button>
+                            <td>
+                                <button
+                                    onClick={() => router.push(`/Products/editar/${prod.id}`)}
+                                    aria-label="Editar produto"
+                                    className="text-blue-500 hover:text-blue-700"
+                                >
+                                    <CiEdit />
+                                </button>
+
+                                <button onClick={() => handleDelete(prod.id)} className='text-red-500 hover:text-red-700'>
+                                    <IoRemoveCircle />
+                                </button>
                             </td>
                         </tr>
                     )}
