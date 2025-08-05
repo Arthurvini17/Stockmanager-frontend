@@ -30,7 +30,7 @@ export default function FormContent() {
         };
 
         try {
-            const res = await axios.post('http://localhost:3001/products', payload);
+            const res = await axios.post('https://stockmanager-backend-p2ko.onrender.com/products', payload);
             console.log('Produto adicionado!', res.data);
         } catch (error) {
             console.error('Erro no envio', error);
