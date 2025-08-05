@@ -5,6 +5,9 @@ import api from '../../lib/api';
 import { CiEdit } from "react-icons/ci";
 import { IoRemoveCircle } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+
 export default function ProductsContent() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
@@ -37,11 +40,25 @@ export default function ProductsContent() {
     }, [search]);
 
 
-    const handleDelete = async (deletingProduct) => {
-        const newProduct = products.filter((products) => products !== deletingProduct);
-        setProducts(newProduct);
+    const handleDelete = async (id) => {
+        try {
+            const response = await api.delete('/products/' + id);
+            const newArray = products.filter((product) => product.id !== id);
+            setProducts(newArray);
 
-    }
+            toast.success(response.data.message);
+        } catch (error) {
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else if (typeof error.response?.data === 'string') {
+                toast.error(error.response.data);
+            } else {
+                toast.error("Erro ao deletar produto.");
+            }
+        }
+    };
+
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false)
@@ -56,11 +73,17 @@ export default function ProductsContent() {
         );
     }
 
+    const filteredProducts = products.filter(prod => prod === 0);
+
+
 
     return (
         <div className='w-full mx-auto p-20'>
+
             <div className=''>
                 <div>
+                    <ToastContainer position='top-right' autoClose={3000} />
+
                     <h1 className="text-2xl font-bold ">Produtos</h1>
                     <p className='text-md font-light '>Gerencie seu inventario de produtos</p>
                 </div>
@@ -82,7 +105,9 @@ export default function ProductsContent() {
             </div>
             <table className=" min-w-full table-auto  border-[0.5px] border-gray-300">
                 <thead className=''>
+
                     <tr className='text-center bg-gray-200/50 font-extralight  '>
+
                         <th className='p-2 py-2 text-start font-light'>PRODUTO</th>
                         <th className='p-2 font-light '>CATEGORIA</th>
                         <th className='p-2 font-light'>PREÇO</th>
@@ -108,7 +133,7 @@ export default function ProductsContent() {
                                     <CiEdit />
                                 </button>
 
-                                <button onClick={() => handleDelete(products)} className='text-red-500 hover:text-red-700'>
+                                <button onClick={() => handleDelete(prod.id)} className='text-red-500 hover:text-red-700'>
                                     <IoRemoveCircle />
                                 </button>
                             </td>
