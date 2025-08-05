@@ -122,19 +122,19 @@ export default function ProductsContent() {
                         <tr key={prod.id} className=' text-center  border-[0.5px] border-gray-300'>
                             <td className='p-2 text-start '>{prod.Product_name}</td>
                             <td className='p-2 text-blue-500'>{prod.category}</td>
-                            <td className='p-2 '>{prod.price}</td>
+                            <td className='p-2 '>{prod.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</td>
                             <td className='p-2'>{prod.quantity}</td>
-                            <td>
+                            <td className='p-2 gap-2 inline-flex'>
                                 <button
                                     onClick={() => router.push(`/Products/editar/${prod.id}`)}
                                     aria-label="Editar produto"
                                     className="text-blue-500 hover:text-blue-700"
                                 >
-                                    <CiEdit />
+                                    <CiEdit className='text-2xl' />
                                 </button>
 
                                 <button onClick={() => handleDelete(prod.id)} className='text-red-500 hover:text-red-700'>
-                                    <IoRemoveCircle />
+                                    <IoRemoveCircle className='text-2xl ' />
                                 </button>
                             </td>
                         </tr>
