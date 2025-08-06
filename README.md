@@ -2,9 +2,7 @@
 
 Um sistema completo de gerenciamento de estoque, onde é possível cadastrar, visualizar, editar e excluir produtos com facilidade. Criado com foco em produtividade, usabilidade e escalabilidade.
 
-![StockManager Banner](https://via.placeholder.com/1200x400.png?text=StockManager+Banner) <!-- Substitua com uma imagem do seu projeto se desejar -->
 
----
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -32,8 +30,7 @@ Um sistema completo de gerenciamento de estoque, onde é possível cadastrar, vi
 
 ### 📱 Responsivo e funcional
 <p align="center">
-  <img src="https://via.placeholder.com/400x300.png?text=Listagem+de+Produtos" width="400"/>
-  <img src="https://via.placeholder.com/400x300.png?text=Formul%C3%A1rio+de+Cadastro" width="400"/>
+  <img src="/public/stockmanager.png" width="400"/>
 </p>
 
 ---
@@ -50,7 +47,7 @@ Um sistema completo de gerenciamento de estoque, onde é possível cadastrar, vi
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/stockmanager.git
+git clone https://github.com/Arthurvini17/Stockmanager-frontend
 cd stockmanager
 
 # Instale as dependências
